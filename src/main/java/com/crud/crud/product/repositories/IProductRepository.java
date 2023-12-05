@@ -1,8 +1,11 @@
 package com.crud.crud.product.repositories;
 
-import com.crud.crud.product.models.ProductModel;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.UUID;
 
-public interface IProductRepository extends JpaRepository<ProductModel, UUID> {}
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.crud.crud.product.models.ProductModel;
+
+public interface IProductRepository extends JpaRepository<ProductModel, UUID> {
+    void deleteById(UUID id);
+}

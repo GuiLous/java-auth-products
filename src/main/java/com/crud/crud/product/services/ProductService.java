@@ -1,8 +1,9 @@
 package com.crud.crud.product.services;
 
-import com.crud.crud.DTOS.RequestProductDTO;
-import com.crud.crud.product.models.ProductModel;
-import com.crud.crud.product.repositories.IProductRepository;
+import java.util.List;
+import java.util.UUID;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,19 +14,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.validation.Valid;
-import java.util.List;
-import java.util.UUID;
+import com.crud.crud.DTOS.RequestProductDTO;
+import com.crud.crud.product.models.ProductModel;
+import com.crud.crud.product.repositories.IProductRepository;
 
 @Service
 public class ProductService {
     @Autowired
     IProductRepository productRepository;
 
-    public ResponseEntity<List<ProductModel>> getAllProducts() {
-        var allProducts = this.productRepository.findAll();
-
-        return ResponseEntity.ok(allProducts);
+    public ResponseEntity<List<ProductModel>> getAllProducts() throws Exception{
+        try {
+            var allProducts = this.productRepository.findAll();
+            return ResponseEntity.ok(allProducts);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 
     public ResponseEntity<ProductModel> createProduct(@RequestBody @Valid RequestProductDTO data) {
